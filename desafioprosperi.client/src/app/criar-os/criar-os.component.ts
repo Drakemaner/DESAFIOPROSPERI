@@ -4,8 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpService } from '../services/http/http.service';
 import { IOS } from '../interfaces/OS';
 import { FormOsComponent } from "../shared/form-os/form-os.component";
-import { FormData } from '../variables/formData';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-criar-os',
@@ -14,14 +13,20 @@ import { Router } from '@angular/router';
   templateUrl: './criar-os.component.html',
   styleUrl: './criar-os.component.css'
 })
-export class CriarOsComponent {
+export class CriarOsComponent implements OnInit{
 
 
-  constructor(private router : Router, private httpService : HttpService){
+  constructor(private activatedRoute : ActivatedRoute, private router : Router, private httpService : HttpService){
 
   }
 
-  formData : IFormGroup[] = FormData
+  formData! : IFormGroup[]
+
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({formData}) => {
+      this.formData = formData
+    })
+  }
 
 
   criarOS(os : IOS){

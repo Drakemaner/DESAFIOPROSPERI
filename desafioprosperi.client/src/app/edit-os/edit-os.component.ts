@@ -5,7 +5,6 @@ import { HttpService } from '../services/http/http.service';
 import { IOS } from '../interfaces/OS';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Validators, ɵNgNoValidate } from '@angular/forms';
-import { FormData } from '../variables/formData';
 
 @Component({
   selector: 'app-edit-os',
@@ -24,10 +23,13 @@ export class EditOsComponent implements OnInit , OnDestroy{
   }
 
   numOs : number = -1
-  formData : IFormGroup[] = FormData
+  formData! : IFormGroup[]
 
   ngOnInit(): void {
     const numOs = this.activatedRoute.snapshot.paramMap.get('numOs')
+    this.activatedRoute.data.subscribe(({formData}) => {
+      this.formData = formData
+    })
 
     this.httpService.GetOne<IOS>('OS', parseInt(numOs!)).subscribe((a : IOS) => {
       this.numOs = a.numeroOS
