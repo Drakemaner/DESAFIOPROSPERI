@@ -15,19 +15,19 @@ export class HttpService {
     return this.http.get<T[]>(`${this.apiURL}/${type}`)
   }
 
-  GetOne<T>(type : string, numOs : number) : Observable<T> {
-    return this.http.get<T>(`${this.apiURL}/${type}/${numOs}`)
+  GetOne<T>(type : string, param : number | string) : Observable<T> {
+    return this.http.get<T>(`${this.apiURL}/${type}/${param}`)
   }
 
   Post<T>(type : string, obj : T) {
     return this.http.post<T>(`${this.apiURL}/${type}`, obj)
   }
 
-  Update<T>(type : string, obj : T, numOs : number) {
-    return this.http.put<T>(`${this.apiURL}/${type}/${numOs}`, obj)
+  Update<T>(type : string, obj : T, param : number | string) {
+    return this.http.put<T>(`${this.apiURL}/${type}/${param}`, obj)
   }
 
-  Delete<T>(type : string, numOs : number) : Observable<T> {
-    return this.http.delete<T>(`${this.apiURL}/${type}/${numOs}`)
+  Delete<T>(type : string, param : number | string) : Observable<T> {
+    return this.http.delete<T>(`${this.apiURL}/${type}/${param}`)
   }
 }

@@ -2,6 +2,9 @@ import { AfterContentChecked, AfterContentInit, Component, EventEmitter, Input, 
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IFormGroup } from '../../interfaces/IFormGroup';
 import { IOS } from '../../interfaces/OS';
+import { HttpService } from '../../services/http/http.service';
+import { ICliente } from '../../interfaces/ICliente';
+import { IPrestador } from '../../interfaces/IPrestador';
 
 @Component({
   selector: 'app-form-os',
@@ -12,7 +15,7 @@ import { IOS } from '../../interfaces/OS';
 })
 export class FormOsComponent implements OnInit{
 
-  constructor(private formBuilder : FormBuilder){
+  constructor(private formBuilder : FormBuilder, private http : HttpService){
 
   }
   
@@ -34,6 +37,7 @@ export class FormOsComponent implements OnInit{
     console.log(this.formData)
 
     this.initializeForm()
+    this.cpnjCpfVerification()
 
   }
 
@@ -45,6 +49,40 @@ export class FormOsComponent implements OnInit{
     })
     
     this.formulario = this.formBuilder.group(formGroup)
+  }
+
+  cpnjCpfVerification(){
+    this.formulario.get('cnpjCliente')?.valueChanges.subscribe((value) => {
+      if(value.length == 18){
+        if(this.formulario.get('cnpjCliente')?.valid){
+
+          this.verifyCnpj(value.replace('/','_'))
+        }
+      }
+    })
+
+    this.formulario.get('cpfPrestador')?.valueChanges.subscribe((value) => {
+      if(this.formulario.get('cpfPrestador')?.valid){
+
+        this.verifyCpf(value)
+      }
+    })
+  }
+
+  verifyCnpj(cnpj : string){
+    this.http.GetOne<ICliente>('cliente', cnpj).subscribe((data) => {
+      if(data != null){
+        this.formulario.get('nomeCliente')?.setValue(data.nome)
+      }
+    })
+  }
+
+  verifyCpf(cpf : string){
+    this.http.GetOne<IPrestador>('prestador', cpf).subscribe((data) => {
+      if(data != null){
+        this.formulario.get('nomePrestador')?.setValue(data.nome)
+      }
+    })
   }
 
   emitForm(){
