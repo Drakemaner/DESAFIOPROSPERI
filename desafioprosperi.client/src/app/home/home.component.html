@@ -1,0 +1,29 @@
+<main>
+    <div class="container-header">
+        <button routerLink="/cadastrarOS" class="btn w-15"><strong>+</strong> Adicionar OS</button>
+    </div>
+    <div class="container">
+        <ag-grid-angular 
+            style="width: 100%; height: 100%;" 
+            class="ag-theme-quartz"
+            [rowData]="rowData"
+            rowSelection="single"
+            [columnDefs]="colDefs"
+            [animateRows]="true"
+            [defaultColDef]="{
+                flex: 1,
+            }"
+            draggable="true"
+            (gridReady)="onGridReady($event)"
+        />
+    </div>
+    @if (modal.visible) {
+        <app-modal 
+            headerMessage="Tem Certeza que Deseja Excluir a OS ?" 
+            [class]="modal.visible ? 'modal show' : 'modal'"
+            >
+            <button class="btn" (click)="modal.visible = false">Cancelar</button>
+            <button class="btn danger" (click)="deleteRow()">Deletar</button>
+        </app-modal>
+    }
+</main>

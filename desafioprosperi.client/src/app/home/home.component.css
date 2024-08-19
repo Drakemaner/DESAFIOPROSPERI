@@ -1,0 +1,33 @@
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-quartz.css';
+
+.table-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.table{
+  width: 100%;
+}
+
+.modal {
+  width: 0; 
+  height: 0;
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 40%;
+  transition: 1s;
+}
+
+.show {
+  height: 50%;
+  width: 40%;
+}
+
+.table thead r{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

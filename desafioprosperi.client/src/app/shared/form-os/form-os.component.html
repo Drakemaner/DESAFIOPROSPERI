@@ -1,0 +1,17 @@
+<div class="form-container">
+    <h3>{{title}}</h3>
+    <form class="form" [formGroup]="formulario">
+        @for (item of formData; track $index) {
+            <div class="form-group">
+                <label>{{item.label}}</label>
+                <input [type]="item.input.type" [placeholder]="item.placeholder == undefined ? '' : item.placeholder" [formControlName]="item.formControlName" [value]="item.value">
+                @if (formulario.get(item.formControlName)?.hasError('pattern') && formulario.get(item.formControlName)?.dirty) {
+                    <span style="font-size: 10px; color: red;">Insira um {{item.label}} válido</span>
+                }
+            </div>
+        }
+        <div class="form-button">
+            <button class="btn" (click)="emitForm()">{{buttonValue}}</button>
+        </div>
+    </form>
+</div>

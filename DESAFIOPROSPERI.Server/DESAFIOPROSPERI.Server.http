@@ -1,0 +1,6 @@
+@DESAFIOPROSPERI.Server_HostAddress = http://localhost:5207
+
+GET {{DESAFIOPROSPERI.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
