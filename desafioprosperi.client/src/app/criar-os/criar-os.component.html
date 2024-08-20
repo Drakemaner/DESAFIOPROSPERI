@@ -1,4 +1,7 @@
 <main>
+    @if(alert.visible){
+        <app-alert [class]="alert.visible ? 'alert show-alert' : 'alert'" [warnTitle]="alert.warnTitle" [warnMessage]="alert.warnMessage" (closeEvent)="closeAlert()"></app-alert>
+    }
     <div class="container">
         <app-form-os (formValue)="criarOS($event)" buttonValue="Criar" [formData]="formData" title="Criar OS"></app-form-os>
     </div>

@@ -5,39 +5,61 @@ import { HttpService } from '../services/http/http.service';
 import { IOS } from '../interfaces/OS';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Validators, ɵNgNoValidate } from '@angular/forms';
+import { AlertComponent } from '../shared/alert/alert.component';
+import { IAlert } from '../interfaces/IAlert';
 
 @Component({
   selector: 'app-edit-os',
   templateUrl: './edit-os.component.html',
   styleUrl: './edit-os.component.css',
   standalone: true,
-  imports: [FormOsComponent]
+  imports: [FormOsComponent, AlertComponent]
 })
 export class EditOsComponent implements OnInit , OnDestroy{
 
   constructor(private httpService : HttpService, private router : Router, private activatedRoute : ActivatedRoute){
 
   }
+
+  alert : IAlert = {
+    visible: false,
+    warnTitle : 'Erro',
+    warnMessage : 'adsdad',
+    type: 'error'
+  }
+
   ngOnDestroy(): void {
     this.formData.forEach(a => a.value = undefined)
   }
 
-  numOs : number = -1
+  numOs : number = 0
   formData! : IFormGroup[]
 
   ngOnInit(): void {
-    const numOs = this.activatedRoute.snapshot.paramMap.get('numOs')
     this.activatedRoute.data.subscribe(({formData}) => {
       this.formData = formData
     })
 
-    this.httpService.GetOne<IOS>('OS', parseInt(numOs!)).subscribe((a : IOS) => {
-      this.numOs = a.numeroOS
-
-      this.intializeDataForm(a)
-
-    }, () => {
-      alert('Erro ao receber informações da OS')
+    this.activatedRoute.data.subscribe(({data}) => {
+      if(data){
+        this.numOs = data.numeroOS
+        this.intializeDataForm(data)
+      }
+      else {
+        this.alert = {
+          visible: true,
+          warnTitle: 'Erro ao Buscar OS',
+          warnMessage: 'OS não encontrada',
+          type: 'error'
+        }
+      }
+    }, (e) => {
+      this.alert = {
+        visible: true,
+        warnTitle: 'Erro ao Buscar OS',
+        warnMessage: e.error.detail,
+        type: 'error'
+      }
     })
   }
 
@@ -59,15 +81,41 @@ export class EditOsComponent implements OnInit , OnDestroy{
     
   }
 
-  editarOS(os : IOS){
-    this.httpService.Update<IOS>("OS", os, this.numOs).subscribe(() => {
-      alert("OS Editada com Sucesso")
-      this.router.navigate(['/home'])
-    }, (e) => {
-      alert("Erro ao Editar OS: " + e.error.detail)
-
-      this.router.navigate(['/home'])
-    })
+  editarOS(value : IOS | string){
+    if(typeof(value) == 'string'){
+      this.alert = {
+        visible: true,
+        warnTitle: 'Formulário Inválido',
+        warnMessage: value,
+        type: 'error'
+      }
+    }
+    else {
+      this.httpService.Update<IOS>("OS", value, this.numOs).subscribe(() => {
+        this.alert = {
+          visible: true,
+          warnTitle: 'Sucesso !',
+          warnMessage: 'OS Editada com Sucesso',
+          type: 'success'
+        }
+      }, (e) => {
+  
+        this.alert = {
+          visible: true,
+          warnTitle: 'Erro ao Editar OS',
+          warnMessage: e.error.detail,
+          type: 'error'
+        }
+      })
+    }
   }
+
+  closeAlert(){
+    this.alert.visible = false; 
+    if(this.alert.type == 'success'){
+      this.router.navigate(['/home'])
+    }
+  }
+  
 
 }

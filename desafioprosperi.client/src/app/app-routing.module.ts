@@ -3,7 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { CriarOsComponent } from './criar-os/criar-os.component';
 import { EditOsComponent } from './edit-os/edit-os.component';
-import { FormResolver } from './variables/formData';
+
+import { OSResolver } from './resolver/osResolver';
+import { FormResolver } from './resolver/formResolver';
 
 const routes: Routes = [
   {
@@ -13,7 +15,10 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    resolve: {
+      data: OSResolver
+    }
   },
   {
     path: 'cadastrarOS',
@@ -26,7 +31,8 @@ const routes: Routes = [
     path: 'editOS/:numOs',
     component: EditOsComponent,
     resolve: {
-      FormData: FormResolver
+      formData: FormResolver,
+      data: OSResolver
     }
   }
 ];

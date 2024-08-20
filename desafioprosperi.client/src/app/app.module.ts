@@ -6,11 +6,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./shared/header/header.component";
+import { AlertComponent } from './shared/alert/alert.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule, HttpClientModule,

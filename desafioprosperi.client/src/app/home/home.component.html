@@ -1,4 +1,7 @@
 <main>
+    @if(alert.visible){
+        <app-alert [class]="alert.visible ? 'alert show-alert' : 'alert'" [warnTitle]="alert.warnTitle" [warnMessage]="alert.warnMessage" (closeEvent)="alert.visible = false"></app-alert>
+    }
     <div class="container-header">
         <button routerLink="/cadastrarOS" class="btn w-15"><strong>+</strong> Adicionar OS</button>
     </div>
@@ -20,7 +23,7 @@
     @if (modal.visible) {
         <app-modal 
             headerMessage="Tem Certeza que Deseja Excluir a OS ?" 
-            [class]="modal.visible ? 'modal show' : 'modal'"
+            [class]="modal.visible ? 'modal show-modal' : 'modal'"
             >
             <button class="btn" (click)="modal.visible = false">Cancelar</button>
             <button class="btn danger" (click)="deleteRow()">Deletar</button>

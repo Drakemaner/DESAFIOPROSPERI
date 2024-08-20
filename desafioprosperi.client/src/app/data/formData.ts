@@ -1,16 +1,8 @@
 import { Validators } from "@angular/forms";
 import { IFormGroup } from "../interfaces/IFormGroup";
-import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from "@angular/router";
 
-export const FormResolver : ResolveFn<IFormGroup[]>  = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-) => {
 
-  return FormData;
-}
-
-  var FormData : IFormGroup[] = 
+  export var FormData : IFormGroup[] = 
     [
         {
           id: 0,

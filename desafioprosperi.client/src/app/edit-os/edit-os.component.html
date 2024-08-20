@@ -1,7 +1,8 @@
 <main>
+    @if(alert.visible){
+        <app-alert [class]="alert.visible ? 'alert show-alert' : 'alert'" [warnTitle]="alert.warnTitle" [warnMessage]="alert.warnMessage" (closeEvent)="closeAlert()"></app-alert>
+    }
     <div class="container">
-        @defer (when numOs !== -1) {
-            <app-form-os title="Editar OS" buttonValue="Editar" [formData]="formData" (formValue)="editarOS($event)"></app-form-os>
-        }
+        <app-form-os title="Editar OS" buttonValue="Editar" [formData]="formData" (formValue)="editarOS($event)"></app-form-os>
     </div>
 </main>

@@ -74,4 +74,50 @@ input {
 .btn:hover{
     scale: 1.005;
 }
-  
+
+@keyframes showModal {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+    100% {
+        width: 60%;
+        height: 60%;
+        opacity: 1;
+    }
+}
+
+@keyframes showAlert {
+    0% {
+        top: 0;
+        opacity: 0;
+    }
+    100% {
+        top: 5%;
+        opacity: 1;
+    }
+}
+
+.modal {
+    width: 0;
+    height: 0;
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    top: 20%;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: showModal 0.05s forwards;
+}
+
+.alert {
+    position: absolute;
+    z-index: 2;
+    width: 30%;
+    height: 35%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: showAlert 0.1s forwards;
+}

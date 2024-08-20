@@ -31,7 +31,7 @@ export class FormOsComponent implements OnInit{
   buttonValue : string = ''
 
   @Output()
-  formValue : EventEmitter<IOS> = new EventEmitter()
+  formValue : EventEmitter<IOS | string> = new EventEmitter()
 
   ngOnInit(): void {
     console.log(this.formData)
@@ -105,7 +105,7 @@ export class FormOsComponent implements OnInit{
       this.formValue.emit(os)
     }
     else {
-      alert("Formulário Inválido: Todos os Valores são Obrigatórios e se atente aos padrões de formatação")
+      this.formValue.emit("Formulário Inválido: Todos os Valores são Obrigatórios e se atente aos padrões de formatação")
     }
   }
 
