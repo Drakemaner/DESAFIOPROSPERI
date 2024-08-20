@@ -119,5 +119,5 @@ input {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    animation: showAlert 0.1s forwards;
+    animation: showAlert 0.2s forwards;
 }
