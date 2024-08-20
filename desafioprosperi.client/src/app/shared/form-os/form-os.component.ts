@@ -1,3 +1,6 @@
+/**
+ * Component for displaying and handling a form for creating or editing an OS (Order of Service).
+ */
 import { AfterContentChecked, AfterContentInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IFormGroup } from '../../interfaces/IFormGroup';
@@ -42,6 +45,7 @@ export class FormOsComponent implements OnInit{
 
   }
 
+  //Inicializando o Form de forma dinâmica usando ReactiveForms
   initializeForm(){
     const formGroup: { [key: string] : FormControl} = {}
 
@@ -52,6 +56,7 @@ export class FormOsComponent implements OnInit{
     this.formulario = this.formBuilder.group(formGroup)
   }
 
+  //Verificação de CNPJ e CPF para preenchimento automático dos campos de Nome
   cpnjCpfVerification(){
     this.formulario.get('cnpjCliente')?.valueChanges.subscribe((value) => {
       if(value.length == 18){
@@ -70,6 +75,7 @@ export class FormOsComponent implements OnInit{
     })
   }
 
+  //Verificação de CNPJ e CPF no Banco de Dados
   verifyCnpj(cnpj : string){
     this.http.GetOne<ICliente>('cliente', cnpj).subscribe((data) => {
       if(data != null){
@@ -86,6 +92,8 @@ export class FormOsComponent implements OnInit{
     })
   }
 
+
+  //Emissão do Formulário
   emitForm(){
     if(this.formulario.valid){
       var os : IOS = {

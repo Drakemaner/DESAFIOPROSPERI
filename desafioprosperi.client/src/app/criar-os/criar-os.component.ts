@@ -31,13 +31,14 @@ export class CriarOsComponent implements OnInit{
     type: 'error'
   }
 
+  //Recebendo os dados do Formulário OS
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({formData}) => {
       this.formData = formData
     })
   }
 
-
+ //Criando uma nova OS
   criarOS(value : IOS | string){
     if(typeof(value) == 'string'){
       this.alert = {
@@ -68,6 +69,7 @@ export class CriarOsComponent implements OnInit{
     }
   }
 
+  //Fechar o Alert
   closeAlert(){
     this.alert.visible = false; 
 

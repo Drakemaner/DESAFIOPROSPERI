@@ -2,6 +2,7 @@ import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from "@angular
 import { IFormGroup } from "../interfaces/IFormGroup";
 import { FormData } from "../data/formData";
 
+//Resolver para receber dados de Formulário
 export const FormResolver : ResolveFn<IFormGroup[]>  = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

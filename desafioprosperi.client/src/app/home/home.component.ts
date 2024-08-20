@@ -52,6 +52,7 @@ export class HomeComponent implements OnInit{
     type: 'error'
   }
 
+  // Column definitions para o grid
   colDefs: ColDef[] = [
     {
       field: 'numeroOs',
@@ -102,6 +103,7 @@ export class HomeComponent implements OnInit{
 
   ]
 
+  //Recebimento dos dados da API de OS
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({data}) => {
       if(data){
@@ -126,25 +128,29 @@ export class HomeComponent implements OnInit{
     })
   }
 
+  //Função para receber o gridApi para manipulação do grid
   onGridReady(params : GridReadyEvent<IRowOS>,){
     this.gridApi = params.api
   }
 
+  //Função para navegar para a página de edição de OS
   goEdit(numOs : number){
     this.router.navigate([`/editOS/${numOs}`])
   }
 
+  //Função para atualizar a tabela
   refreshTable(rowData : IRowOS[]){
     this.gridApi.setGridOption('rowData', rowData)
   }
 
+  //Função para remover uma OS da tabela
   removeOneFromTheTable(numOs : number){
     this.rowData = this.rowData.filter(a => a.numeroOs != numOs)
 
-    this.gridApi.setGridOption('rowData',this.rowData)
+    this.refreshTable(this.rowData)
   }
   
-
+//Deletar uma OS
   deleteRow(){
     this.modal.visible = false
     this.httpService.Delete<IOS>("OS", this.modal.numeroOs).subscribe(() => {     

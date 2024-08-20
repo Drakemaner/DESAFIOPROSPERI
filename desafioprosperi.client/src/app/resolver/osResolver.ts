@@ -9,6 +9,7 @@ import { Observable } from "rxjs";
 export function OSResolver(route: ActivatedRouteSnapshot,state: RouterStateSnapshot) : Observable<IOS[]>
 export function OSResolver(route: ActivatedRouteSnapshot,state: RouterStateSnapshot) : Observable<IOS>
 
+//Resolver para receber dados de OS
 export function OSResolver(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

@@ -35,6 +35,7 @@ export class EditOsComponent implements OnInit , OnDestroy{
   numOs : number = 0
   formData! : IFormGroup[]
 
+  //Recebendo os dados da OS para preencher o formulário
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({formData, data}) => {
       this.formData = formData
@@ -60,6 +61,7 @@ export class EditOsComponent implements OnInit , OnDestroy{
     })
   }
 
+  //Inicializando o Form de forma dinâmica usando ReactiveForms
   intializeDataForm(os : IOS){
      this.formData.forEach(a => {
       
@@ -77,6 +79,7 @@ export class EditOsComponent implements OnInit , OnDestroy{
     
   }
 
+  //Requisição de Edição de OS
   editarOS(value : IOS | string){
     if(typeof(value) == 'string'){
       this.alert = {
@@ -105,7 +108,7 @@ export class EditOsComponent implements OnInit , OnDestroy{
       })
     }
   }
-
+ //Fechando o Alert
   closeAlert(){
     this.alert.visible = false; 
     if(this.alert.type == 'success'){
