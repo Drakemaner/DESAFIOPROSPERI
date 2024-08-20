@@ -21,7 +21,7 @@ namespace DESAFIOPROSPERI.Server.Data
             Cliente cliente1 = new Cliente(1, "Amazon", "21.239.712/3923-64");
             Cliente cliente2 = new Cliente(2, "Prosperi", "12.323.134/7823-91");
             Cliente cliente3 = new Cliente(3, "Netflix", "45.645.776/7674-82");
-            Cliente cliente4 = new Cliente(4, "Microsoft", "43.543.453./7123-52");
+            Cliente cliente4 = new Cliente(4, "Microsoft", "43.543.453/7123-52");
             Cliente cliente5 = new Cliente(5, "Sony", "78.987.979/6576-75");
 
             Prestador prestador1 = new Prestador(1, "Guilherme Jenner", "232.113.456-02");
