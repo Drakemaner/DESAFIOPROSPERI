@@ -36,11 +36,8 @@ export class EditOsComponent implements OnInit , OnDestroy{
   formData! : IFormGroup[]
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({formData}) => {
+    this.activatedRoute.data.subscribe(({formData, data}) => {
       this.formData = formData
-    })
-
-    this.activatedRoute.data.subscribe(({data}) => {
       if(data){
         this.numOs = data.numeroOS
         this.intializeDataForm(data)
@@ -64,7 +61,6 @@ export class EditOsComponent implements OnInit , OnDestroy{
   }
 
   intializeDataForm(os : IOS){
-    
      this.formData.forEach(a => {
       
       switch(a.id){

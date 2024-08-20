@@ -5,13 +5,14 @@ import { IOS } from '../../interfaces/OS';
 import { HttpService } from '../../services/http/http.service';
 import { ICliente } from '../../interfaces/ICliente';
 import { IPrestador } from '../../interfaces/IPrestador';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-form-os',
   templateUrl: './form-os.component.html',
   styleUrl: './form-os.component.css',
   standalone: true,
-  imports: [ReactiveFormsModule]
+  imports: [ReactiveFormsModule, RouterLink]
 })
 export class FormOsComponent implements OnInit{
 
