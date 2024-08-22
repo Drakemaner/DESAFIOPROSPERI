@@ -28,6 +28,26 @@ export var ColDefsGrid: ColDef[] = [
       field: 'dataExecucao',
       headerName: 'Data da Execução',
       filter: 'agDateColumnFilter',
-      floatingFilter: true
+      floatingFilter: true,
+      type: 'dateString',
+      filterParams: {
+        comparator: (dataFiltro: Date, dataValor: string) => {
+          // Comparação do filtro de data, recebendo um valor string
+          const dateParts = dataValor.split('/');
+          const dia = Number(dateParts[0]);
+          const mes = Number(dateParts[1]) - 1; 
+          const ano = Number(dateParts[2]);
+          const cellDate = new Date(ano, mes, dia);
+
+          if (cellDate < dataFiltro) {
+            return -1;
+          } else if (cellDate > dataFiltro) {
+            return 1;
+          } else {
+            return 0;
+          }
+        },
+        browserDatePicker: true
+      }
     }
   ]
