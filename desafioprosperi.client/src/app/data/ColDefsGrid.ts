@@ -1,7 +1,8 @@
 import { ColDef, ValueGetterParams } from 'ag-grid-community';
+import { IRowOS } from '../interfaces/IRow';
 
 
-export var ColDefsGrid: ColDef[] = [
+export var ColDefsGrid: ColDef<IRowOS>[] = [
     {
       field: 'numeroOs',
       headerName: 'Número OS'
