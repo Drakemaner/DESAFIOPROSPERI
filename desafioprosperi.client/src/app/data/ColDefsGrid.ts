@@ -26,6 +26,8 @@ export var ColDefsGrid: ColDef[] = [
     },
     {
       field: 'dataExecucao',
-      headerName: 'Data da Execução'
+      headerName: 'Data da Execução',
+      filter: 'agDateColumnFilter',
+      floatingFilter: true
     }
   ]
