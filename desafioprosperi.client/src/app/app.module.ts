@@ -11,7 +11,7 @@ import { AlertComponent } from './shared/alert/alert.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

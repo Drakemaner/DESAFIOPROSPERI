@@ -6,6 +6,7 @@ import { EditOsComponent } from './edit-os/edit-os.component';
 
 import { OSResolver } from './resolver/osResolver';
 import { FormResolver } from './resolver/formResolver';
+import { ColDefsGridResolver } from './resolver/gridColResolver';
 
 const routes: Routes = [
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     resolve: {
-      data: OSResolver
+      data: OSResolver,
+      colDefsGrid: ColDefsGridResolver
     }
   },
   {

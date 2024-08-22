@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular'; // Angular Data Grid Component
 import { ColDef, ModuleRegistry, ClientSideRowModelModule, GridApi, GridReadyEvent, ValueGetterParams } from 'ag-grid-community';
 import { IRowOS } from '../interfaces/IRow';
@@ -10,6 +10,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ModalComponent } from '../shared/modal/modal.component';
 import { AlertComponent } from "../shared/alert/alert.component";
 import { IAlert } from '../interfaces/IAlert';
+import { IGridMethods } from '../interfaces/IGridMethods';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
@@ -27,11 +28,18 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
   styleUrl: './home.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent implements OnInit{ 
+export class HomeComponent implements OnInit, OnDestroy, IGridMethods{ 
 
-  constructor(private activatedRoute: ActivatedRoute, private httpService :  HttpService, private router : Router, private changeDetectorRef: ChangeDetectorRef 
-  ){
+  constructor(private activatedRoute: ActivatedRoute, private httpService :  HttpService, private router : Router, private changeDetectorRef: ChangeDetectorRef){
 
+  }
+
+  ngOnDestroy(): void {
+    this.colDefs.forEach((a, i, array) => {
+      if(a.field == 'Actions'){
+        array.splice(i, 1)
+      }
+    })
   }
 
   private gridApi!: GridApi<IRowOS>
@@ -53,59 +61,36 @@ export class HomeComponent implements OnInit{
   }
 
   // Column definitions para o grid
-  colDefs: ColDef[] = [
-    {
-      field: 'numeroOs',
-      headerName: 'Número OS'
-    },
-    {
-      field: 'nome',
-      headerName: 'Nome OS',
-      filter: true,
-      floatingFilter: true
-    },
-    {
-      field: 'valor',
-      headerName: 'Valor',
-      type: ['currency', 'shaded'],
-      valueGetter: (p : ValueGetterParams) => "R$ " + p.data.valor
-    },
-    {
-      field: 'nomeCliente',
-      headerName: 'Nome Cliente',
-      filter: true,
-      floatingFilter: true
-    },
-    {
-      field: 'dataExecucao',
-      headerName: 'Data da Execução'
-    },
-    {
-      field: 'Actions',
-      cellRenderer: ActionButtonsComponent,
-      cellRendererParams: (params : ValueGetterParams) =>  {
-        const value = params.data.numeroOs
-
-        return {
-          clicked : (a : string) => {
-
-            if(a == 'edit'){
-              this.goEdit(value)
-            }
-            else{
-              this.modal.visible = true
-              this.modal.numeroOs = value
-            }
-          }
-        }
-      }
-    }
-
-  ]
+  colDefs: ColDef[] = []
 
   //Recebimento dos dados da API de OS
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({data}) => {
+    this.activatedRoute.data.subscribe(({data, colDefsGrid}) => {
+      //recebimento dos dados das colunas
+      this.colDefs = colDefsGrid
+      this.colDefs.push(
+        {
+          field: 'Actions',
+          cellRenderer: ActionButtonsComponent,
+          cellRendererParams: (params : ValueGetterParams) =>  {
+            const value = params.data.numeroOs
+    
+            return {
+              clicked : (a : string) => {
+    
+                if(a == 'edit'){
+                  this.goEdit(value)
+                }
+                else{
+                  this.modal.visible = true
+                  this.modal.numeroOs = value
+                }
+              }
+            }
+          }
+        }
+      )
+      //recebimento dos dados das OS
       if(data){
         data.forEach((a : IOS) => {
           const date = new Date(a.dataExecucao);
@@ -126,6 +111,8 @@ export class HomeComponent implements OnInit{
         this.refreshTable(this.rowData)
       }
     })
+
+    console.log(this.colDefs)
   }
 
   //Função para receber o gridApi para manipulação do grid
