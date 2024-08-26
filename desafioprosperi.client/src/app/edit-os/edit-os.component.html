@@ -3,6 +3,8 @@
         <app-alert [class]="alert.visible ? 'alert show-alert' : 'alert'" [warnTitle]="alert.warnTitle" [warnMessage]="alert.warnMessage" (closeEvent)="closeAlert()"></app-alert>
     }
     <div class="container">
-        <app-form-os title="Editar OS" buttonValue="Editar" [formData]="formData" (formValue)="editarOS($event)"></app-form-os>
+        @defer (when dataLoaded) {
+            <app-form-os title="Editar OS" buttonValue="Editar" [formData]="formData" (formValue)="editarOS($event)"></app-form-os>
+        }
     </div>
 </main>

@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit, OnDestroy, IGridMethods{
 
   //Recebimento dos dados da API de OS
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({data, colDefsGrid}) => {
+    this.activatedRoute.data.subscribe(({ colDefsGrid }) => {
       //recebimento dos dados das colunas
       this.colDefs = colDefsGrid
       this.colDefs.push(
@@ -88,8 +88,12 @@ export class HomeComponent implements OnInit, OnDestroy, IGridMethods{
               }
             }
           }
+          
         }
       )
+      
+    })
+    this.httpService.GetAll<IOS>("OS").subscribe((data : IOS[]) => {
       //recebimento dos dados das OS
       if(data){
         data.forEach((a : IOS) => {
@@ -111,7 +115,6 @@ export class HomeComponent implements OnInit, OnDestroy, IGridMethods{
         this.refreshTable(this.rowData)
       }
     })
-
     console.log(this.colDefs)
   }
 

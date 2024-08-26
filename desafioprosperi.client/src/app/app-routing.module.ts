@@ -3,8 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { CriarOsComponent } from './criar-os/criar-os.component';
 import { EditOsComponent } from './edit-os/edit-os.component';
-
-import { OSResolver } from './resolver/osResolver';
 import { FormResolver } from './resolver/formResolver';
 import { ColDefsGridResolver } from './resolver/gridColResolver';
 
@@ -18,7 +16,6 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     resolve: {
-      data: OSResolver,
       colDefsGrid: ColDefsGridResolver
     }
   },
@@ -33,8 +30,7 @@ const routes: Routes = [
     path: 'editOS/:numOs',
     component: EditOsComponent,
     resolve: {
-      formData: FormResolver,
-      data: OSResolver
+      formData: FormResolver    
     }
   }
 ];

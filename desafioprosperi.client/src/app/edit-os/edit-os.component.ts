@@ -33,15 +33,22 @@ export class EditOsComponent implements OnInit , OnDestroy{
   }
 
   numOs : number = 0
+  dataLoaded = false
   formData! : IFormGroup[]
 
   //Recebendo os dados da OS para preencher o formulário
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({formData, data}) => {
+    this.activatedRoute.data.subscribe(({ formData }) => {
       this.formData = formData
+     
+    })
+
+    this.numOs = parseInt(this.activatedRoute.snapshot.paramMap.get("numOs")!)
+    this.httpService.GetOne<IOS>("OS", this.numOs).subscribe((data) => {
       if(data){
-        this.numOs = data.numeroOS
         this.intializeDataForm(data)
+        
+        this.dataLoaded = true
       }
       else {
         this.alert = {
@@ -81,6 +88,7 @@ export class EditOsComponent implements OnInit , OnDestroy{
 
   //Requisição de Edição de OS
   editarOS(value : IOS | string){
+    console.log(this.numOs)
     if(typeof(value) == 'string'){
       this.alert = {
         visible: true,
